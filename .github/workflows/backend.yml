@@ -1,0 +1,28 @@
+name: API CI
+on: [push, pull_request]
+defaults: { run: { working-directory: server } }
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: db_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+    env:
+      PG_DB: db_test
+      PG_USER: postgres
+      PG_PASS: postgres
+      PG_HOST: localhost
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r server/requirements.txt
+          python manage.py migrate
+          python -m pytest
