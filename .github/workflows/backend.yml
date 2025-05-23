@@ -8,12 +8,12 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: db_test
+          POSTGRES_DB: learning_tool
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         ports: ["5432:5432"]
     env:
-      PG_DB: db_test
+      PG_DB: learning_tool
       PG_USER: postgres
       PG_PASS: postgres
       PG_HOST: localhost
