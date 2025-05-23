@@ -2,3 +2,5 @@ Django>=4.2
 djangorestframework
 psycopg2-binary
 python-decouple
+pytest
+pytest-django
