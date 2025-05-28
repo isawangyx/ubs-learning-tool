@@ -1,12 +1,13 @@
-import { useForm, FormProvider } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import axios from 'axios';
+import { useForm, FormProvider } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import { api } from "../lib/api";
+import { HiOutlineArrowRight, HiSparkles } from "react-icons/hi";
 
 interface ProfilePayload {
   career_stage: string;
   skills: string[];
-  goals: string[];
+  goals: string;
   weekly_availability: Record<string, number>;
   preferred_content: string[];
 }
@@ -14,107 +15,149 @@ interface ProfilePayload {
 export function Onboarding() {
   const methods = useForm<ProfilePayload>({
     defaultValues: {
-      career_stage: '',
+      career_stage: "",
       skills: [],
-      goals: [],
-      weekly_availability: {},
+      goals: "",
+      weekly_availability: {
+        Mon: 0,
+        Tue: 0,
+        Wed: 0,
+        Thu: 0,
+        Fri: 0,
+        Sat: 0,
+        Sun: 0,
+      },
       preferred_content: [],
     },
   });
+  const { register, handleSubmit } = methods;
   const { access } = useAuth();
-  const navigate = useNavigate();
+  const nav = useNavigate();
 
   const onSubmit = async (data: ProfilePayload) => {
-    await axios.post('/api/profile/', data, {
+    await api.post("/api/profile/", data, {
       headers: { Authorization: `Bearer ${access}` },
     });
-    navigate('/dashboard');
+    nav("/dashboard");
   };
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className="max-w-xl mx-auto mt-10 space-y-8"
-      >
-        {/* Step 1: Career stage */}
-        <section>
-          <h3 className="text-lg font-semibold mb-2">Career Stage</h3>
-          <select
-            className="w-full border rounded px-3 py-2"
-            {...methods.register('career_stage', { required: true })}
-          >
-            <option value="">Select...</option>
-            <option value="Junior">Junior</option>
-            <option value="Mid">Mid</option>
-            <option value="Senior">Senior</option>
-          </select>
-        </section>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+      <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-8">
+        <div className="flex justify-center items-center space-x-2 mb-6">
+          <h2 className="text-2xl font-semibold">Tell Us About You</h2>
+          <HiSparkles className="text-indigo-600 text-xl" />
+        </div>
 
-        {/* Step 2: Skills */}
-        <section>
-          <h3 className="text-lg font-semibold mb-2">Skills</h3>
-          {['Frontend', 'Backend', 'Data Science', 'DevOps'].map((skill) => (
-            <label key={skill} className="block">
-              <input
-                type="checkbox"
-                value={skill}
-                {...methods.register('skills')}
-                className="mr-2"
-              />
-              {skill}
-            </label>
-          ))}
-        </section>
-
-        {/* Step 3: Goals */}
-        <section>
-          <h3 className="text-lg font-semibold mb-2">Goals</h3>
-          <textarea
-            className="w-full border rounded px-3 py-2"
-            placeholder="E.g. Become a full‑stack dev"
-            {...methods.register('goals')}
-          ></textarea>
-        </section>
-
-        {/* Step 4: Weekly Availability */}
-        <section>
-          <h3 className="text-lg font-semibold mb-2">Weekly Availability (hours)</h3>
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d) => (
-            <div key={d} className="flex items-center mb-2">
-              <label className="w-16">{d}</label>
-              <input
-                type="number"
-                min="0"
-                className="border rounded px-3 py-1 w-20"
-                {...methods.register(`weekly_availability.${d}` as const, {
-                  valueAsNumber: true,
-                })}
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Career Stage */}
+            <div>
+              <label className="block mb-2 font-medium">Career Stage</label>
+              <select
+                {...register("career_stage", { required: true })}
+                className="border border-gray-300 w-full rounded-lg px-3 py-2 focus:ring-indigo-500"
+              >
+                <option value="">Select your stage</option>
+                <option value="Junior">Junior</option>
+                <option value="Mid">Mid</option>
+                <option value="Senior">Senior</option>
+                <option value="Lead">Lead</option>
+              </select>
+            </div>
+            {/* Skills */}
+            <div>
+              <label className="block mb-2 font-medium">Skills</label>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  "Frontend",
+                  "Backend",
+                  "Data Science",
+                  "DevOps",
+                  "UX/UI",
+                  "AI/ML",
+                ].map((skill) => (
+                  <label
+                    key={skill}
+                    className="inline-flex items-center space-x-2"
+                  >
+                    <input
+                      type="checkbox"
+                      value={skill}
+                      {...register("skills")}
+                    />
+                    <span>{skill}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            {/* Goals */}
+            <div>
+              <label className="block mb-2 font-medium">Career Goals</label>
+              <textarea
+                {...register("goals")}
+                rows={3}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500"
+                placeholder="e.g. Become a Full-Stack Developer…"
               />
             </div>
-          ))}
-        </section>
-
-        {/* Step 5: Preferred Content */}
-        <section>
-          <h3 className="text-lg font-semibold mb-2">Preferred Learning Format</h3>
-          {['Projects', 'Quizzes', 'Videos', 'Articles'].map((fmt) => (
-            <label key={fmt} className="block">
-              <input
-                type="checkbox"
-                value={fmt}
-                {...methods.register('preferred_content')}
-                className="mr-2"
-              />
-              {fmt}
-            </label>
-          ))}
-        </section>
-
-        <button className="bg-purple-600 text-white px-6 py-2 rounded">
-          Submit Profile
-        </button>
-      </form>
-    </FormProvider>
+            {/* Weekly Availability */}
+            <div>
+              <label className="block mb-2 font-medium">
+                Weekly Availability (hours)
+              </label>
+              <div className="grid grid-cols-4 gap-4">
+                {Object.keys(methods.getValues("weekly_availability")).map(
+                  (day) => (
+                    <div key={day} className="flex flex-col">
+                      <span className="text-sm font-medium">{day}</span>
+                      <input
+                        type="number"
+                        min={0}
+                        {...register(`weekly_availability.${day}` as const, {
+                          valueAsNumber: true,
+                        })}
+                        className="border border-gray-300 rounded-lg px-2 py-1 focus:ring-indigo-500"
+                      />
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+            {/* Preferred Content */}
+            <div>
+              <label className="block mb-2 font-medium">
+                Preferred Content Types
+              </label>
+              <div className="grid grid-cols-2 gap-4">
+                {["Projects", "Quizzes", "Videos", "Problem Sets"].map(
+                  (type) => (
+                    <label
+                      key={type}
+                      className="inline-flex items-center space-x-2"
+                    >
+                      <input
+                        type="checkbox"
+                        value={type}
+                        {...register("preferred_content")}
+                      />
+                      <span>{type}</span>
+                    </label>
+                  )
+                )}
+              </div>
+            </div>
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 text-white py-3 rounded-lg flex justify-center items-center space-x-2 hover:bg-indigo-700 transition"
+            >
+              <span>Submit Profile</span>
+              <HiOutlineArrowRight className="h-5 w-5" />
+            </button>
+          </form>
+        </FormProvider>
+      </div>
+    </div>
   );
 }
