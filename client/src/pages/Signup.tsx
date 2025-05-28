@@ -82,6 +82,8 @@ export function SignUp() {
               id="name"
               type="text"
               placeholder="Your Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600"
             />
           </div>
@@ -96,6 +98,8 @@ export function SignUp() {
               id="email"
               type="email"
               placeholder="Your E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600"
             />
           </div>
@@ -111,6 +115,8 @@ export function SignUp() {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="At least 8 characters"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm pr-10 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600"
               />
               <button
