@@ -7,7 +7,7 @@ import { HiOutlineArrowRight, HiSparkles } from "react-icons/hi";
 interface ProfilePayload {
   career_stage: string;
   skills: string[];
-  goals: string;
+  goals: string[];
   weekly_availability: Record<string, number>;
   preferred_content: string[];
 }
@@ -17,7 +17,7 @@ export function Onboarding() {
     defaultValues: {
       career_stage: "",
       skills: [],
-      goals: "",
+      goals: [],
       weekly_availability: {
         Mon: 0,
         Tue: 0,
@@ -94,11 +94,18 @@ export function Onboarding() {
             {/* Goals */}
             <div>
               <label className="block mb-2 font-medium">Career Goals</label>
-              <textarea
-                {...register("goals")}
-                rows={3}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500"
-                placeholder="e.g. Become a Full-Stack Developer…"
+              <input
+                className="w-full border rounded px-3 py-2"
+                placeholder="E.g. Frontend, Backend, ML"
+                onChange={(e) =>
+                  methods.setValue(
+                    "goals",
+                    e.target.value
+                      .split(",")
+                      .map((s) => s.trim())
+                      .filter((s) => s.length > 0)
+                  )
+                }
               />
             </div>
             {/* Weekly Availability */}
