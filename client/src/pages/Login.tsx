@@ -1,25 +1,25 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../lib/api";
-import { HiSparkles, HiOutlineArrowRight } from "react-icons/hi";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { api } from '../lib/api';
+import { HiSparkles, HiOutlineArrowRight } from 'react-icons/hi';
 
 export function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const nav = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError('');
     try {
-      const res = await api.post("/api/token/", { username, password });
-      localStorage.setItem("access", res.data.access);
-      localStorage.setItem("refresh", res.data.refresh);
-      nav("/dashboard");
+      const res = await api.post('/api/token/', { username, password });
+      localStorage.setItem('access', res.data.access);
+      localStorage.setItem('refresh', res.data.refresh);
+      nav('/dashboard');
     } catch {
-      setError("Invalid credentials");
+      setError('Invalid credentials');
     }
   };
 
@@ -65,7 +65,7 @@ export function Login() {
             <div className="relative">
               <input
                 id="password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="At least 8 characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -76,7 +76,7 @@ export function Login() {
                 onClick={() => setShowPassword((prev) => !prev)}
                 className="absolute inset-y-0 right-0 px-3 flex items-center text-sm text-gray-500"
               >
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? 'Hide' : 'Show'}
               </button>
             </div>
           </div>
@@ -91,7 +91,7 @@ export function Login() {
 
         {/* Footer */}
         <p className="text-sm text-center text-gray-700 mt-6">
-          First time user?{" "}
+          First time user?{' '}
           <a href="/signup" className="text-indigo-600 underline">
             Sign up
           </a>

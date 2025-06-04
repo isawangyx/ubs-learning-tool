@@ -1,8 +1,8 @@
-import { useForm, FormProvider } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import { api } from "../lib/api";
-import { HiOutlineArrowRight, HiSparkles } from "react-icons/hi";
+import { useForm, FormProvider } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import { api } from '../lib/api';
+import { HiOutlineArrowRight, HiSparkles } from 'react-icons/hi';
 
 interface ProfilePayload {
   career_stage: string;
@@ -15,7 +15,7 @@ interface ProfilePayload {
 export function Onboarding() {
   const methods = useForm<ProfilePayload>({
     defaultValues: {
-      career_stage: "",
+      career_stage: '',
       skills: [],
       goals: [],
       weekly_availability: {
@@ -35,10 +35,10 @@ export function Onboarding() {
   const nav = useNavigate();
 
   const onSubmit = async (data: ProfilePayload) => {
-    await api.post("/api/profile/", data, {
+    await api.post('/api/profile/', data, {
       headers: { Authorization: `Bearer ${access}` },
     });
-    nav("/dashboard");
+    nav('/dashboard');
   };
 
   return (
@@ -55,7 +55,7 @@ export function Onboarding() {
             <div>
               <label className="block mb-2 font-medium">Career Stage</label>
               <select
-                {...register("career_stage", { required: true })}
+                {...register('career_stage', { required: true })}
                 className="border border-gray-300 w-full rounded-lg px-3 py-2 focus:ring-indigo-500"
               >
                 <option value="">Select your stage</option>
@@ -70,12 +70,12 @@ export function Onboarding() {
               <label className="block mb-2 font-medium">Skills</label>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  "Frontend",
-                  "Backend",
-                  "Data Science",
-                  "DevOps",
-                  "UX/UI",
-                  "AI/ML",
+                  'Frontend',
+                  'Backend',
+                  'Data Science',
+                  'DevOps',
+                  'UX/UI',
+                  'AI/ML',
                 ].map((skill) => (
                   <label
                     key={skill}
@@ -84,7 +84,7 @@ export function Onboarding() {
                     <input
                       type="checkbox"
                       value={skill}
-                      {...register("skills")}
+                      {...register('skills')}
                     />
                     <span>{skill}</span>
                   </label>
@@ -99,9 +99,9 @@ export function Onboarding() {
                 placeholder="E.g. Frontend, Backend, ML"
                 onChange={(e) =>
                   methods.setValue(
-                    "goals",
+                    'goals',
                     e.target.value
-                      .split(",")
+                      .split(',')
                       .map((s) => s.trim())
                       .filter((s) => s.length > 0)
                   )
@@ -114,7 +114,7 @@ export function Onboarding() {
                 Weekly Availability (hours)
               </label>
               <div className="grid grid-cols-4 gap-4">
-                {Object.keys(methods.getValues("weekly_availability")).map(
+                {Object.keys(methods.getValues('weekly_availability')).map(
                   (day) => (
                     <div key={day} className="flex flex-col">
                       <span className="text-sm font-medium">{day}</span>
@@ -137,7 +137,7 @@ export function Onboarding() {
                 Preferred Content Types
               </label>
               <div className="grid grid-cols-2 gap-4">
-                {["Projects", "Quizzes", "Videos", "Problem Sets"].map(
+                {['Projects', 'Quizzes', 'Videos', 'Problem Sets'].map(
                   (type) => (
                     <label
                       key={type}
@@ -146,7 +146,7 @@ export function Onboarding() {
                       <input
                         type="checkbox"
                         value={type}
-                        {...register("preferred_content")}
+                        {...register('preferred_content')}
                       />
                       <span>{type}</span>
                     </label>

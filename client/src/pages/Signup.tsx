@@ -1,39 +1,39 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaGoogle, FaApple } from "react-icons/fa";
-import { HiOutlineArrowRight, HiSparkles } from "react-icons/hi";
-import { api } from "../lib/api";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaGoogle, FaApple } from 'react-icons/fa';
+import { HiOutlineArrowRight, HiSparkles } from 'react-icons/hi';
+import { api } from '../lib/api';
 
 export function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const nav = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError('');
 
     try {
-      await api.post("/api/users/", {
+      await api.post('/api/users/', {
         username: name,
         email,
         password,
       });
 
       // Then log them in directly
-      const res = await api.post("/api/token/", {
+      const res = await api.post('/api/token/', {
         username: name,
         password,
       });
 
-      localStorage.setItem("access", res.data.access);
-      localStorage.setItem("refresh", res.data.refresh);
-      nav("/onboarding");
-    } catch (err: any) {
-      setError("Registration failed. Please try again.");
+      localStorage.setItem('access', res.data.access);
+      localStorage.setItem('refresh', res.data.refresh);
+      nav('/onboarding');
+    } catch {
+      setError('Registration failed. Please try again.');
     }
   };
 
@@ -113,7 +113,7 @@ export function SignUp() {
             <div className="relative">
               <input
                 id="password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="At least 8 characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -124,7 +124,7 @@ export function SignUp() {
                 onClick={() => setShowPassword((prev) => !prev)}
                 className="absolute inset-y-0 right-0 px-3 flex items-center text-sm text-gray-500"
               >
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? 'Hide' : 'Show'}
               </button>
             </div>
           </div>
@@ -137,15 +137,15 @@ export function SignUp() {
               className="mt-1 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-600"
             />
             <label htmlFor="terms" className="text-gray-700">
-              I agree to all the{" "}
+              I agree to all the{' '}
               <a href="#" className="text-indigo-600 underline">
                 Term
               </a>
-              ,{" "}
+              ,{' '}
               <a href="#" className="text-indigo-600 underline">
                 Privacy Policy
-              </a>{" "}
-              and{" "}
+              </a>{' '}
+              and{' '}
               <a href="#" className="text-indigo-600 underline">
                 Fees
               </a>
@@ -164,7 +164,7 @@ export function SignUp() {
 
         {/* Footer */}
         <p className="text-sm text-center text-gray-700 mt-6">
-          Have an account?{" "}
+          Have an account?{' '}
           <a href="/login" className="text-indigo-600 hover:underline">
             Log in
           </a>
