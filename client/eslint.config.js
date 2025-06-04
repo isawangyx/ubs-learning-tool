@@ -6,7 +6,7 @@ export default [
   ...tseslint.configs.recommended,
   {
     files: ["**/*.{ts,tsx}"],
-    ignores: ['tailwind.config.ts', 'vite.config.mjs', 'vitest.config.ts'],
+    ignores: ['tailwind.config.ts', 'vite.config.mjs', 'vitest.config.ts', 'setupTests.ts'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
