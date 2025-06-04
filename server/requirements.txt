@@ -6,3 +6,6 @@ pytest
 pytest-django
 djangorestframework-simplejwt
 django-cors-headers
+numpy
+pandas
+scikit-learn
