@@ -1,5 +1,4 @@
-// src/api/profile.ts
-import { api } from '../lib/api'; // your shared Axios instance
+import { api } from '../lib/api'; 
 
 export interface ProfilePayload {
   career_stage: string;
