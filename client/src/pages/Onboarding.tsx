@@ -35,6 +35,7 @@ export function Onboarding() {
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error('Onboarding submission failed:', err.message);
+      }
     }
   };
 
