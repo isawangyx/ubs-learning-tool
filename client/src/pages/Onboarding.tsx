@@ -32,8 +32,9 @@ export function Onboarding() {
         headers: { Authorization: `Bearer ${access}` },
       });
       nav('/dashboard');
-    } catch (err: any) {
-      console.error('Onboarding validation failed:', err.response?.data);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error('Onboarding submission failed:', err.message);
     }
   };
 
