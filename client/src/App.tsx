@@ -5,6 +5,8 @@ import { SignUp } from './pages/Signup';
 import { Onboarding } from './pages/Onboarding';
 import { Dashboard } from './pages/Dashboard';
 import { Protected } from './hooks/useAuth';
+import { Profile } from './pages/Profile';
+import { EditProfile } from './pages/EditProfile';
 
 export default function App() {
   return (
@@ -14,6 +16,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/onboarding" element={<Protected><Onboarding /></Protected>} />
         <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
+        <Route path="/profile" element={<Protected><Profile /></Protected>} />
+        <Route path="/edit-profile" element={<Protected><EditProfile /></Protected>} />
       </Routes>
     </BrowserRouter>
   );

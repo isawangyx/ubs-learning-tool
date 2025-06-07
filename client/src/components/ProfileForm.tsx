@@ -22,7 +22,7 @@ export function ProfileForm({
   onSubmit,
   buttonText = 'Submit Profile',
 }: ProfileFormProps) {
-  const { register, handleSubmit, getValues, watch } = methods;
+  const { register, handleSubmit, getValues } = methods;
   const [goalsInput, setGoalsInput] = useState('');
 
   useEffect(() => {
@@ -31,15 +31,6 @@ export function ProfileForm({
       setGoalsInput(existingGoals.join(', '));
     }
   }, [getValues]);
-
-  useEffect(() => {
-    const subscription = watch((value) => {
-      if (Array.isArray(value.goals)) {
-        setGoalsInput(value.goals.join(', '));
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
 
   const availability = {
     Mon: 0,

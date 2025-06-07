@@ -73,7 +73,7 @@ export function EditProfile() {
     console.log('profile object:', profile);
     console.log('profile.id:', profile.id);
     try {
-      await api.patch(`/api/profile/${profile.id}/`, data);
+      await api.patch('/api/profile/me/', data);
       navigate('/dashboard');
     } catch (err: unknown) {
       console.error('Update failed:', err);
