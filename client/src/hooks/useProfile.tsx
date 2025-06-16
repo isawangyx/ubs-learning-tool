@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 
 export interface ProfilePayload {
   id: number;
+  username: string;
   career_stage: string;
   skills: string[];
   goals: string[];

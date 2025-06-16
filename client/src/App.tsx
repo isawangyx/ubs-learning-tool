@@ -12,12 +12,40 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/onboarding" element={<Protected><Onboarding /></Protected>} />
-        <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
-        <Route path="/profile" element={<Protected><Profile /></Protected>} />
-        <Route path="/edit-profile" element={<Protected><EditProfile /></Protected>} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/login' element={<Login />} />
+        <Route
+          path='/onboarding'
+          element={
+            <Protected>
+              <Onboarding />
+            </Protected>
+          }
+        />
+        <Route
+          path='/dashboard'
+          element={
+            <Protected>
+              <Dashboard />
+            </Protected>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <Protected>
+              <Profile />
+            </Protected>
+          }
+        />
+        <Route
+          path='/edit-profile'
+          element={
+            <Protected>
+              <EditProfile />
+            </Protected>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import LearningPathView
+from .views import ColdStartRecommend
 
 urlpatterns = [
-    path("learning-path/", LearningPathView.as_view(), name="learning-path"),
+    path('cold_start/', ColdStartRecommend.as_view()),
 ]
