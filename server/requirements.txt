@@ -10,3 +10,5 @@ numpy
 pandas
 scikit-learn
 nltk
+lightfm>=1.17
+joblib

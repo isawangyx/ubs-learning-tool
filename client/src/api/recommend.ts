@@ -8,8 +8,8 @@ export interface ModuleRec {
   level: string;
 }
 
-export function fetchColdStartReco(payload: ProfilePayload) {
+export function fetchHybridReco(payload: ProfilePayload) {
   return api
-    .post<ModuleRec[]>('/api/recommend/cold_start/', payload)
+    .post<ModuleRec[]>('/api/recommend/hybrid/', payload)
     .then((res) => res.data);
 }
