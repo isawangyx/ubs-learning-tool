@@ -1,5 +1,4 @@
-// Ensure the module exists and is correctly imported
-import ColdStartRecs from '../components/ColdStartRecs';
+import HybridRecs from '../components/HybridRecs';
 import { useProfile } from '../hooks/useProfile';
 
 export function Dashboard() {
@@ -27,15 +26,7 @@ export function Dashboard() {
     <div className='p-8'>
       <h1 className='text-2xl font-bold'>Welcome back, {profile.username}!</h1>
 
-      <ColdStartRecs userProfile={userProfileForReco} />
-      {/* 
-      {profile.isNew ? (
-        // cold-start for brand-new users
-        <ColdStartRecs userProfile={userProfileForReco} />
-      ) : (
-        // LightFM once we have history
-        <LightFMRecs userId={profile.id} />
-      )} */}
+      <HybridRecs userProfile={userProfileForReco} />
     </div>
   );
 }
