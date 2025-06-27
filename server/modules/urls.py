@@ -1,10 +1,8 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ModuleViewSet
-
-router = DefaultRouter()
-router.register("", ModuleViewSet, basename="module")
+from .views import ModuleListView, ModuleDetailView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', ModuleListView.as_view(), name='module-list'),
+    path('<int:pk>/', ModuleDetailView.as_view(), name='module-detail'),
 ]

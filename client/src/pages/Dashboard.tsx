@@ -1,5 +1,6 @@
 import HybridRecs from '../components/HybridRecs';
 import { useProfile } from '../hooks/useProfile';
+import { ProgressChart } from '../components/ProgressChart';
 
 export function Dashboard() {
   const { profile, loading, error } = useProfile();
@@ -27,6 +28,10 @@ export function Dashboard() {
       <h1 className='text-2xl font-bold'>Welcome back, {profile.username}!</h1>
 
       <HybridRecs userProfile={userProfileForReco} />
+
+      <h2 className="text-xl font-bold mt-8">Your Learning Progress</h2>
+      <ProgressChart />
+      
     </div>
   );
 }

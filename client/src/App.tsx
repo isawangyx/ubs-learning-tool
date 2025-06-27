@@ -7,6 +7,8 @@ import { Dashboard } from './pages/Dashboard';
 import { Protected } from './hooks/useAuth';
 import { Profile } from './pages/Profile';
 import { EditProfile } from './pages/EditProfile';
+import { ModuleDetails } from './pages/ModuleDetails';
+import { ModuleList } from './pages/ModuleList';
 
 export default function App() {
   return (
@@ -30,6 +32,8 @@ export default function App() {
             </Protected>
           }
         />
+        <Route path='/module' element={<ModuleList />} />
+        <Route path='/module/:moduleId' element={<ModuleDetails />} />
         <Route
           path='/profile'
           element={
