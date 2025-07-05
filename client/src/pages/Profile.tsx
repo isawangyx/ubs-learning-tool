@@ -42,12 +42,6 @@ export function Profile() {
 
   return (
     <div className='max-w-3xl mx-auto px-6 py-12'>
-      <button
-        onClick={() => navigate('/dashboard')}
-        className='self-start mb-4 text-indigo-600 hover:text-indigo-800 font-medium'
-      >
-        ← Back to Dashboard
-      </button>
       <h1 className='text-3xl font-semibold mb-6'>My Profile</h1>
       <div className='space-y-6 bg-white shadow rounded-lg p-6'>
         <div>

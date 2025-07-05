@@ -36,7 +36,6 @@ export default function HybridRecs({
 
   return (
     <div>
-      <h2>Recommended for you</h2>
       <ul>
         {modules.map((m) => (
           <li key={m.id}>
