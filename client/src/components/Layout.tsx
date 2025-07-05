@@ -24,6 +24,9 @@ export function Layout() {
         <NavLink to='/my-modules' className='mb-4'>
           My Courses
         </NavLink>
+        <NavLink to='/chat' className='mb-4'>
+          AI Chat
+        </NavLink>
         <div className='mt-auto'>
           <NavLink to='/help' className='mb-2 block text-sm text-gray-500'>
             Help Center

@@ -12,3 +12,11 @@ scikit-learn
 nltk
 lightfm>=1.17
 joblib
+openai
+sentence-transformers
+chromadb
+langchain
+langchain-deepseek
+langchain-community
+langchain-huggingface
+langchain-chroma

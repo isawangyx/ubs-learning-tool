@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "modules",
     "recommend",
     'moduleprogress',
+    "rag",
 ]
 
 MIDDLEWARE = [
