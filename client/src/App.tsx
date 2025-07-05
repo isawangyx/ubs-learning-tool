@@ -12,6 +12,7 @@ import { ModuleList } from './pages/ModuleList';
 import { Certifications } from './pages/Certifications';
 import { MyModules } from './pages/MyModules';
 import { Layout } from './components/Layout';
+import { ChatPage } from './pages/Chat';
 
 export default function App() {
   return (
@@ -51,7 +52,8 @@ export default function App() {
           <Route path='certifications' element={<Certifications />} />
           <Route path='my-modules' element={<MyModules />} />
           <Route path='profile' element={<Profile />} />
-          <Route path='/edit-profile' element={<EditProfile />} />
+          <Route path='edit-profile' element={<EditProfile />} />
+          <Route path='chat' element={<ChatPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
