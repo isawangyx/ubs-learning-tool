@@ -1,6 +1,7 @@
 from langchain.chains import RetrievalQA
 from langchain_chroma import Chroma
 from langchain_deepseek import ChatDeepSeek
+import os
 
 from .chroma_store import embeddings
 
@@ -14,7 +15,7 @@ store = Chroma(
 # 2) init LLM
 llm = ChatDeepSeek(
   model="deepseek-chat",
-  api_key="***REMOVED***",
+  api_key=os.getenv("DEEPSEEK_API_KEY"),
   temperature=0.2,
 )
 

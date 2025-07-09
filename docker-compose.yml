@@ -5,9 +5,9 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_DB: learning_tool
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -21,11 +21,12 @@ services:
     ports:
       - '8000:8000'
     environment:
-      PG_DB: learning_tool
-      PG_USER: postgres
-      PG_PASS: postgres
-      PG_HOST: db
-      PG_PORT: 5432
+      PG_DB: ${PG_DB}
+      PG_USER: ${PG_USER}
+      PG_PASS: ${PG_PASS}
+      PG_HOST: ${PG_HOST}
+      PG_PORT: ${PG_PORT}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
     depends_on:
       - db
 
