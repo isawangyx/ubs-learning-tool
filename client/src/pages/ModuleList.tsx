@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Module, fetchModules, PaginatedModules } from '../api/modules';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Spinner } from '@/components/ui/spinner';
+import { Clock, BarChart2, Star } from 'lucide-react';
 
 export function ModuleList() {
   const [data, setData] = useState<PaginatedModules | null>(null);
@@ -19,8 +24,13 @@ export function ModuleList() {
       .finally(() => setLoading(false));
   }, [page]);
 
-  if (loading) return <div>Loading modules…</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <div className='text-red-600 text-center py-10'>Error: {error}</div>;
+  }
   if (!data) return null;
 
   const totalPages = Math.ceil(data.count / 12);
@@ -28,8 +38,8 @@ export function ModuleList() {
 
   return (
     <div className='p-6'>
-      <h1 className='text-2xl font-bold mb-4'>Modules</h1>
-      <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+      <h2 className='text-2xl font-bold mb-6 ml-2'>All Modules</h2>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
         {data.results.map((m: Module) => {
           const skills =
             typeof m.skill_tags === 'string'
@@ -37,42 +47,63 @@ export function ModuleList() {
               : m.skill_tags;
 
           return (
-            <li key={m.id} className='p-4 border rounded hover:shadow'>
+            <Card key={m.id} className='hover:shadow-lg transition'>
               <Link to={`/module/${m.id}`}>
-                <h2 className='font-semibold'>{m.title}</h2>
-                <p className='text-sm text-gray-600'>
-                  {m.duration} hrs — {m.level}
-                </p>
-                <p className='text-sm text-gray-500 mt-1'>
-                  Skill Tags: {skills.join(', ')}
-                </p>
-                <p className='text-sm text-gray-500 mt-1'>
-                  ⭐ Rating: {m.avg_rating} ({m.review_count} reviews)
-                </p>
+                <CardHeader>
+                  <h2 className='text-xl font-semibold'>{m.title}</h2>
+                </CardHeader>
+                <CardContent className='space-y-2'>
+                  <div className='flex items-center space-x-2 text-sm'>
+                    <Clock className='w-4 h-4' />
+                    <span>{m.duration} hrs</span>
+                    <BarChart2 className='w-4 h-4 ml-4' />
+                    <span>{m.level}</span>
+                  </div>
+
+                  <div className='flex flex-wrap gap-1'>
+                    {skills.map((tag: string, idx: unknown) => (
+                      <Badge key={`${tag.trim()}-${idx}`}>{tag.trim()}</Badge>
+                    ))}
+                  </div>
+
+                  <div className='flex items-center space-x-1 text-sm'>
+                    <Star className='w-4 h-4 text-yellow-500' />
+                    <span>
+                      {m.avg_rating.toFixed(1)} ({m.review_count})
+                    </span>
+                  </div>
+
+                  <Button size='sm' variant='outline' className='mt-2'>
+                    View Details
+                  </Button>
+                </CardContent>
               </Link>
-            </li>
+            </Card>
           );
         })}
-      </ul>
+      </div>
 
-      <div className='flex justify-between items-center mt-6'>
-        <button
-          onClick={() => setPage((p) => Math.max(p - 1, 1))}
+      {/* Pagination */}
+      <div className='flex justify-center items-center space-x-4 mt-8'>
+        <Button
+          size='sm'
           disabled={page === 1}
-          className='px-3 py-1 bg-gray-200 rounded disabled:opacity-50'
+          onClick={() => setPage((p) => Math.max(p - 1, 1))}
         >
-          Previous
-        </button>
+          Prev
+        </Button>
+
         <span>
-          Page {page} of {totalPages}
+          Page <strong>{page}</strong> of <strong>{totalPages}</strong>
         </span>
-        <button
-          onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+
+        <Button
+          size='sm'
           disabled={page === totalPages}
-          className='px-3 py-1 bg-gray-200 rounded disabled:opacity-50'
+          onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
         >
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );

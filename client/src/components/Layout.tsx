@@ -15,16 +15,36 @@ export function Layout() {
         >
           Dashboard
         </NavLink>
-        <NavLink to='/module' className='mb-4'>
+        <NavLink
+          to='/module'
+          className={({ isActive }) =>
+            isActive ? 'font-semibold mb-4' : 'mb-4'
+          }
+        >
           Explore
         </NavLink>
-        <NavLink to='/certifications' className='mb-4'>
+        <NavLink
+          to='/certifications'
+          className={({ isActive }) =>
+            isActive ? 'font-semibold mb-4' : 'mb-4'
+          }
+        >
           Certifications
         </NavLink>
-        <NavLink to='/my-modules' className='mb-4'>
+        <NavLink
+          to='/my-modules'
+          className={({ isActive }) =>
+            isActive ? 'font-semibold mb-4' : 'mb-4'
+          }
+        >
           My Courses
         </NavLink>
-        <NavLink to='/chat' className='mb-4'>
+        <NavLink
+          to='/chat'
+          className={({ isActive }) =>
+            isActive ? 'font-semibold mb-4' : 'mb-4'
+          }
+        >
           AI Chat
         </NavLink>
         <div className='mt-auto'>

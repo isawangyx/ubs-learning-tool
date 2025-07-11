@@ -11,6 +11,34 @@ from django.db.models import Max, Sum
 class ProgressUpdateView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        """
+        GET /api/module-progress/?certified=true|false
+        Returns the current user's ModuleProgress records,
+        optionally filtered by certified status.
+        """
+        qs = ModuleProgress.objects.filter(user=request.user)
+        cert = request.query_params.get('certified')
+        if cert is not None:
+            is_cert = cert.lower() in ['true', '1']
+            qs = qs.filter(certified=is_cert)
+
+        results = []
+        for prog in qs:
+            results.append({
+                'id': prog.id,
+                'module': {
+                    'id': prog.module.id,
+                    'title': prog.module.title,
+                },
+                'grade': prog.grade,
+                'last_event': prog.last_event,
+                'ndays_act': prog.ndays_act,
+                'nchapters': prog.nchapters,
+                'certified': prog.certified,
+            })
+        return Response(results)
+
     def post(self, request):
         serializer = ProgressUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

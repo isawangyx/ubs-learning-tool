@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchHybridReco, ModuleRec } from '../api/recommend';
 import { ProfilePayload } from '../api/profile';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function HybridRecs({
   userProfile,
@@ -35,14 +36,20 @@ export default function HybridRecs({
   if (!modules.length) return <div>Loading recommendations…</div>;
 
   return (
-    <div>
-      <ul>
-        {modules.map((m) => (
-          <li key={m.id}>
-            <strong>{m.title}</strong> — {m.duration} hrs — {m.level}
-          </li>
-        ))}
-      </ul>
+    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
+      {modules.map((m) => (
+        <Card key={m.id} className='hover:shadow-xl transition'>
+          <CardContent className='p-4 space-y-2'>
+            <h3 className='text-lg font-semibold'>{m.title}</h3>
+            <div className='text-sm text-muted-foreground'>
+              Duration: {m.duration} hrs
+            </div>
+            <div className='text-sm text-muted-foreground'>
+              Level: {m.level}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
 }

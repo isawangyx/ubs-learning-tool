@@ -25,13 +25,15 @@ export function Dashboard() {
 
   return (
     <div className='p-8'>
-      <h1 className='text-2xl font-bold'>Welcome back, {profile.username}!</h1>
+      <h1 className='text-2xl font-bold'>
+        Welcome back,{' '}
+        <span className='text-purple-400'>{profile.username}</span>!
+      </h1>
 
       <HybridRecs userProfile={userProfileForReco} />
 
-      <h2 className="text-xl font-bold mt-8">Your Learning Progress</h2>
+      <h2 className='text-xl font-bold mt-8'>Your Learning Progress</h2>
       <ProgressChart />
-      
     </div>
   );
 }
