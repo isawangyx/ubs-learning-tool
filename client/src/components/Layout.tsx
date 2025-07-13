@@ -32,7 +32,7 @@ export function Layout() {
           Certifications
         </NavLink>
         <NavLink
-          to='/my-modules'
+          to='/saved-modules'
           className={({ isActive }) =>
             isActive ? 'font-semibold mb-4' : 'mb-4'
           }

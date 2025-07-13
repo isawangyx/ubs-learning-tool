@@ -28,7 +28,7 @@ export function ModuleDetails() {
           ...data,
           skill_tags: skillTags,
           goal_tags: goalTags,
-          moduleId: data.id,
+          id: data.id,
         });
       })
       .catch((err) => setError(err.message))

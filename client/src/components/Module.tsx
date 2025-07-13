@@ -4,7 +4,7 @@ import { updateProgress } from '../api/progress';
 export type ModuleType = 'quiz' | 'code' | 'proj';
 
 export interface ModuleProps {
-  moduleId: number;
+  id: number;
   title: string;
   duration: number;
   skill_tags: string[];
@@ -14,7 +14,7 @@ export interface ModuleProps {
   review_count: number;
 }
 export function Module({
-  moduleId,
+  id: moduleId,
   title,
   duration,
   skill_tags,

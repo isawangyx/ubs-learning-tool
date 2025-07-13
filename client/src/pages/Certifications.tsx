@@ -59,7 +59,7 @@ export function Certifications() {
           <Card key={cert.id} className='hover:shadow-lg transition'>
             <CardContent className='space-y-3'>
               <div className='flex items-center space-x-2'>
-                <CheckBadgeIcon className='w-6 h-6 text-green-500' />
+                <CheckBadgeIcon className='w-6 h-6 text-green-500 flex-shrink-0' />
                 <h3 className='text-lg font-semibold truncate'>
                   {cert.module.title}
                 </h3>

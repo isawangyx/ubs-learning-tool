@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import {
+  fetchSavedModules,
+  saveModule,
+  unsaveModule,
+} from '../api/bookmarks';
 import { Link } from 'react-router-dom';
 import { Module, fetchModules, PaginatedModules } from '../api/modules';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -6,9 +11,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Spinner } from '@/components/ui/spinner';
 import { Clock, BarChart2, Star } from 'lucide-react';
+import { BookmarkIcon as BookmarkOutline } from '@heroicons/react/24/outline';
+import { BookmarkIcon as BookmarkSolid } from '@heroicons/react/24/solid';
 
 export function ModuleList() {
   const [data, setData] = useState<PaginatedModules | null>(null);
+  const [savedMap, setSavedMap] = useState<Record<number, number>>({});
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +30,29 @@ export function ModuleList() {
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
+
+    fetchSavedModules().then((list) => {
+      const map: Record<number, number> = {};
+      list.forEach((s) => {
+        map[s.module.id] = s.id;
+      });
+      setSavedMap(map);
+    });
   }, [page]);
+
+  const handleToggleSave = async (moduleId: number) => {
+    if (savedMap[moduleId]) {
+      await unsaveModule(savedMap[moduleId]);
+      setSavedMap((prev) => {
+        const c = { ...prev };
+        delete c[moduleId];
+        return c;
+      });
+    } else {
+      const saved = await saveModule(moduleId);
+      setSavedMap((prev) => ({ ...prev, [moduleId]: saved.id }));
+    }
+  };
 
   if (loading) {
     return <Spinner />;
@@ -41,13 +71,24 @@ export function ModuleList() {
       <h2 className='text-2xl font-bold mb-6 ml-2'>All Modules</h2>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
         {data.results.map((m: Module) => {
+          const isSaved = Boolean(savedMap[m.id]);
           const skills =
             typeof m.skill_tags === 'string'
               ? JSON.parse(m.skill_tags)
               : m.skill_tags;
 
           return (
-            <Card key={m.id} className='hover:shadow-lg transition'>
+            <Card key={m.id} className='hover:shadow-lg transition relative'>
+              <button
+                onClick={() => handleToggleSave(m.id)}
+                className='absolute top-2 right-2 p-1'
+              >
+                {isSaved ? (
+                  <BookmarkSolid className='w-5 h-5 text-indigo-600' />
+                ) : (
+                  <BookmarkOutline className='w-5 h-5 text-gray-400' />
+                )}
+              </button>
               <Link to={`/module/${m.id}`}>
                 <CardHeader>
                   <h2 className='text-xl font-semibold'>{m.title}</h2>
