@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  fetchSavedModules,
-  saveModule,
-  unsaveModule,
-} from '../api/bookmarks';
+import { useSearchParams } from 'react-router-dom';
+import { fetchSavedModules, saveModule, unsaveModule } from '../api/bookmarks';
 import { Link } from 'react-router-dom';
 import { Module, fetchModules, PaginatedModules } from '../api/modules';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -15,6 +12,9 @@ import { BookmarkIcon as BookmarkOutline } from '@heroicons/react/24/outline';
 import { BookmarkIcon as BookmarkSolid } from '@heroicons/react/24/solid';
 
 export function ModuleList() {
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get('search') || '';
+
   const [data, setData] = useState<PaginatedModules | null>(null);
   const [savedMap, setSavedMap] = useState<Record<number, number>>({});
   const [page, setPage] = useState(1);
@@ -23,7 +23,7 @@ export function ModuleList() {
 
   useEffect(() => {
     setLoading(true);
-    fetchModules(page, 12)
+    fetchModules(page, 12, search)
       .then((json) => {
         if (json.count > 100) json.count = 100;
         setData(json);
@@ -38,7 +38,7 @@ export function ModuleList() {
       });
       setSavedMap(map);
     });
-  }, [page]);
+  }, [page, search]);
 
   const handleToggleSave = async (moduleId: number) => {
     if (savedMap[moduleId]) {
@@ -69,6 +69,11 @@ export function ModuleList() {
   return (
     <div className='p-6'>
       <h2 className='text-2xl font-bold mb-6 ml-2'>All Modules</h2>
+      {search && (
+        <p className='mb-4 text-gray-600'>
+          Showing results for <strong>"{search}"</strong>
+        </p>
+      )}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
         {data.results.map((m: Module) => {
           const isSaved = Boolean(savedMap[m.id]);

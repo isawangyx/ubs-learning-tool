@@ -20,12 +20,19 @@ export interface PaginatedModules {
 
 export async function fetchModules(
   page: number,
-  pageSize = 12
+  pageSize = 12,
+  search?: string
 ): Promise<PaginatedModules> {
-  const { data } = await api.get<PaginatedModules>('/api/modules/', {
-    params: { page, page_size: pageSize },
+  const params = new URLSearchParams({
+    page: String(page),
+    page_size: String(pageSize),
   });
-  return data;
+  if (search) {
+    params.set('search', search);
+  }
+  return api
+    .get<PaginatedModules>(`/api/modules/?${params.toString()}`)
+    .then((res) => res.data);
 }
 
 export function fetchModuleById(id: number): Promise<Module> {

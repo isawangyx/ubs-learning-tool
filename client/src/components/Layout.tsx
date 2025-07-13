@@ -1,8 +1,28 @@
-import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {
+  NavLink,
+  Outlet,
+  useSearchParams,
+} from 'react-router-dom';
 import { ProfileMenu } from './ProfileMenu';
 
 export function Layout() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [inputValue, setInputValue] = useState(
+    searchParams.get('search') || ''
+  );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (inputValue) {
+        setSearchParams({ search: inputValue });
+      } else {
+        setSearchParams({});
+      }
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [inputValue, setSearchParams]);
+
   return (
     <div className='flex h-screen'>
       <nav className='w-60 bg-white border-r p-4 flex flex-col'>
@@ -61,7 +81,9 @@ export function Layout() {
         <header className='flex justify-between items-center p-4 border-b'>
           <input
             type='search'
-            placeholder='Try search programming course'
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder='Search modules...'
             className='flex-1 max-w-md p-2 border rounded mr-4'
           />
           <ProfileMenu />
