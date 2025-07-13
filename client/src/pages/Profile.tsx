@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useProfile } from '../hooks/useProfile';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Panda, Star, CalendarDays, Video, BookOpen } from 'lucide-react';
 
 export function Profile() {
   const { access } = useAuth();
@@ -41,61 +45,88 @@ export function Profile() {
   const daysOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   return (
-    <div className='max-w-3xl mx-auto px-6 py-12'>
-      <h1 className='text-3xl font-semibold mb-6'>My Profile</h1>
-      <div className='space-y-6 bg-white shadow rounded-lg p-6'>
+    <div className='max-w-3xl mx-auto px-6 py-12 space-y-8'>
+      <Card className='flex items-center space-x-6 p-6'>
         <div>
-          <h2 className='text-lg font-medium'>Career Stage</h2>
-          <p className='text-gray-700'>{profile.career_stage}</p>
+          <h2 className='text-2xl font-semibold'>{profile.username}</h2>
+          <p className='text-gray-600 flex items-center space-x-2'>
+            <Panda className='w-5 h-5' />
+            <span>{profile.career_stage}</span>
+          </p>
         </div>
+      </Card>
 
-        <div>
-          <h2 className='text-lg font-medium'>Skills</h2>
-          <ul className='list-disc list-inside text-gray-700'>
+      <div className='grid gap-6 lg:grid-cols-2'>
+        <Card>
+          <CardHeader className='flex items-center space-x-2'>
+            <Star className='w-5 h-5 text-yellow-500' />
+            <h2 className='text-lg font-medium'>Skills</h2>
+          </CardHeader>
+          <CardContent className='flex flex-wrap gap-2'>
             {profile.skills.map((skill) => (
-              <li key={skill}>{skill}</li>
+              <Badge key={skill}>{skill}</Badge>
             ))}
-          </ul>
-        </div>
+          </CardContent>
+        </Card>
 
-        <div>
-          <h2 className='text-lg font-medium'>Career Goals</h2>
-          <ul className='list-disc list-inside text-gray-700'>
+        <Card>
+          <CardHeader className='flex items-center space-x-2'>
+            <BookOpen className='w-5 h-5 text-indigo-500' />
+            <h2 className='text-lg font-medium'>Career Goals</h2>
+          </CardHeader>
+          <CardContent className='flex flex-wrap gap-2'>
             {profile.goals.map((goal) => (
-              <li key={goal}>{goal}</li>
+              <Badge key={goal} variant='outline'>
+                {goal}
+              </Badge>
             ))}
-          </ul>
-        </div>
+          </CardContent>
+        </Card>
+      </div>
 
-        <div>
+      <Card>
+        <CardHeader className='flex items-center space-x-2'>
+          <CalendarDays className='w-5 h-5 text-green-500' />
           <h2 className='text-lg font-medium'>Weekly Availability</h2>
-          <ul className='grid grid-cols-2 gap-2 text-gray-700'>
-            {daysOrder.map((day) => {
-              const hours = profile.weekly_availability?.[day] ?? 0;
-              return (
-                <li key={day}>
-                  <strong>{day}:</strong> {hours} hr
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        </CardHeader>
+        <CardContent className='grid grid-cols-7 gap-4'>
+          {daysOrder.map((day) => {
+            const hrs = profile.weekly_availability?.[day] ?? 0;
+            const pct = Math.min((Number(hrs) / 8) * 100, 100);
+            return (
+              <div key={day} className='flex flex-col items-center'>
+                <span className='text-sm font-medium'>{day}</span>
+                <div className='w-full bg-gray-200 rounded-full h-2 mt-1'>
+                  <div
+                    className='bg-green-500 h-2 rounded-full'
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+                <span className='text-xs text-gray-500 mt-1'>{hrs} hr</span>
+              </div>
+            );
+          })}
+        </CardContent>
+      </Card>
 
-        <div>
-          <h2 className='text-lg font-medium'>Preferred Content Types</h2>
-          <ul className='list-disc list-inside text-gray-700'>
-            {profile.preferred_content.map((type) => (
-              <li key={type}>{type}</li>
-            ))}
-          </ul>
-        </div>
+      <Card>
+        <CardHeader className='flex items-center space-x-2'>
+          <Video className='w-5 h-5 text-purple-500' />
+          <h2 className='text-lg font-medium'>Preferred Content</h2>
+        </CardHeader>
+        <CardContent className='flex flex-wrap gap-2'>
+          {profile.preferred_content.map((type) => (
+            <Badge key={type} variant='secondary'>
+              {type}
+            </Badge>
+          ))}
+        </CardContent>
+      </Card>
 
-        <button
-          onClick={() => navigate('/edit-profile')}
-          className='mt-6 inline-block bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition'
-        >
+      <div className='text-center'>
+        <Button onClick={() => navigate('/edit-profile')} className='px-8 py-3'>
           Edit Profile
-        </button>
+        </Button>
       </div>
     </div>
   );
