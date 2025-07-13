@@ -10,7 +10,7 @@ import { EditProfile } from './pages/EditProfile';
 import { ModuleDetails } from './pages/ModuleDetails';
 import { ModuleList } from './pages/ModuleList';
 import { Certifications } from './pages/Certifications';
-import { MyModules } from './pages/MyModules';
+import { SavedModules } from './pages/SavedModules';
 import { Layout } from './components/Layout';
 import { ChatPage } from './pages/Chat';
 
@@ -50,7 +50,7 @@ export default function App() {
           <Route path='module' element={<ModuleList />} />
           <Route path='module/:moduleId' element={<ModuleDetails />} />
           <Route path='certifications' element={<Certifications />} />
-          <Route path='my-modules' element={<MyModules />} />
+          <Route path='saved-modules' element={<SavedModules />} />
           <Route path='profile' element={<Profile />} />
           <Route path='edit-profile' element={<EditProfile />} />
           <Route path='chat' element={<ChatPage />} />

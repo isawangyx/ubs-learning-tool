@@ -29,7 +29,7 @@ export function Dashboard() {
         Welcome back,{' '}
         <span className='text-purple-400'>{profile.username}</span>!
       </h1>
-
+      <h2 className='text-xl font-bold mt-8'>Recommended for you...</h2>
       <HybridRecs userProfile={userProfileForReco} />
 
       <h2 className='text-xl font-bold mt-8'>Your Learning Progress</h2>

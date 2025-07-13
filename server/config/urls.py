@@ -29,4 +29,5 @@ urlpatterns = [
     path('api/recommend/', include('recommend.urls')),
     path('api/progress/', include('moduleprogress.urls')),
     path("api/rag/", include("rag.urls")),
+    path("api/saved-modules/", include("savedmodules.urls") ),
 ]
