@@ -99,3 +99,18 @@ def progress_history(request):
         for entry in qs
     ]
     return Response(data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def module_progress_stats(request):
+    """
+    GET /api/module-progress/stats/
+    Returns total counts of certified and in-progress modules.
+    """
+    user = request.user
+    total_cert = ModuleProgress.objects.filter(user=user, certified=True).count()
+    total_inprog = ModuleProgress.objects.filter(user=user, certified=False).count()
+    return Response({
+        'certified_count': total_cert,
+        'in_progress_count': total_inprog,
+    })
