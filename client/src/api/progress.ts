@@ -2,6 +2,11 @@ import { api } from '../lib/api';
 
 export type ProgressEvent = 'view' | 'chapter' | 'complete';
 
+export interface ProgressStats {
+  certified_count: number;
+  in_progress_count: number;
+}
+
 export interface ProgressPayload {
   module_id: number;
   event_type: ProgressEvent;
@@ -60,5 +65,17 @@ export interface Certified {
 }
 
 export function fetchCertifiedModules(): Promise<Certified[]> {
-  return api.get<Certified[]>('/api/progress/?certified=true').then((res) => res.data);
+  return api
+    .get<Certified[]>('/api/progress/?certified=true')
+    .then((res) => res.data);
+}
+
+export function fetchInProgressModules(): Promise<Certified[]> {
+  return api
+    .get<Certified[]>('/api/progress/?certified=false')
+    .then((res) => res.data);
+}
+
+export function fetchProgressStats(): Promise<ProgressStats> {
+  return api.get<ProgressStats>('/api/progress/stats/').then((res) => res.data);
 }

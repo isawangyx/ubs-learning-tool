@@ -36,16 +36,17 @@ export default function HybridRecs({
   if (!modules.length) return <div>Loading recommendations…</div>;
 
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4'>
       {modules.map((m) => (
-        <Card key={m.id} className='hover:shadow-xl transition'>
-          <CardContent className='p-4 space-y-2'>
-            <h3 className='text-lg font-semibold'>{m.title}</h3>
-            <div className='text-sm text-muted-foreground'>
-              Duration: {m.duration} hrs
-            </div>
-            <div className='text-sm text-muted-foreground'>
-              Level: {m.level}
+        <Card key={m.id} className='hover:shadow-md transition p-2'>
+          <CardContent className='space-y-1'>
+            <h3 className='text-sm font-semibold whitespace-normal break-words'>
+              {m.title}
+            </h3>
+            <div className='text-xs text-muted-foreground flex items-center space-x-1'>
+              <span>{m.duration}h</span>
+              <span aria-hidden='true'>•</span>
+              <span> {m.level.replace(/level/gi, '').trim()}</span>
             </div>
           </CardContent>
         </Card>
