@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import HybridRecs from '../components/HybridRecs';
 import { useProfile } from '../hooks/useProfile';
-import { ProgressChart } from '../components/ProgressChart';
 import {
   fetchInProgressModules,
   fetchProgressStats,
@@ -88,12 +87,6 @@ export function Dashboard() {
       </section>
 
       <InProgressList inProgress={inProgress} />
-
-      <section>
-        <h2 className='text-xl font-semibold mb-4'>Activity Trends</h2>
-        <ProgressChart />
-      </section>
-
       <section>
         <h2 className='text-xl font-semibold mb-4'>Recommended for you</h2>
         <HybridRecs userProfile={userProfileForReco} />
