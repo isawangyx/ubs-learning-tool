@@ -14,3 +14,17 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+api.interceptors.response.use(null, async (error) => {
+  if (error.response?.status === 401) {
+    // try refreshing
+    const refresh = localStorage.getItem('refresh');
+    if (refresh) {
+      const { data } = await axios.post('/api/token/refresh/', { refresh });
+      localStorage.setItem('access', data.access);
+      error.config.headers!['Authorization'] = `Bearer ${data.access}`;
+      return axios.request(error.config);
+    }
+  }
+  return Promise.reject(error);
+});
