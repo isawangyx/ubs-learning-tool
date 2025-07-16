@@ -108,7 +108,12 @@ export function ModuleList() {
 
                   <div className='flex flex-wrap gap-1'>
                     {skills.map((tag: string, idx: unknown) => (
-                      <Badge key={`${tag.trim()}-${idx}`}>{tag.trim()}</Badge>
+                      <Badge
+                        key={`${tag.trim()}-${idx}`}
+                        className='whitespace-normal break-words'
+                      >
+                        {tag.trim()}
+                      </Badge>
                     ))}
                   </div>
 
